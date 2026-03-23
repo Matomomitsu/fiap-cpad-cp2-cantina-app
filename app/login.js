@@ -1,53 +1,210 @@
+import { useState } from 'react';
 import { useRouter } from 'expo-router';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-import { PrimaryButton } from '../components/PrimaryButton';
-import { ScreenContainer } from '../components/ScreenContainer';
-import { theme } from '../styles/theme';
+import { LogoFiap } from '../components/LogoFiap';
+import { useUser } from '../contexts/UserContext';
 
 export default function LoginScreen() {
   const router = useRouter();
+  const { setUser } = useUser();
+  const [rm, setRm] = useState('RM');
+  const [nome, setNome] = useState('');
+  const [erro, setErro] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  function handleRmChange(text) {
+    // Sempre manter o prefixo "RM"
+    if (!text.startsWith('RM')) {
+      text = 'RM';
+    }
+    // Extrair só os dígitos depois do prefixo, limitar a 6
+    const digits = text.slice(2).replace(/[^0-9]/g, '').slice(0, 6);
+    setRm('RM' + digits);
+  }
+
+  function handleEntrar() {
+    const digits = rm.slice(2);
+    if (digits.length !== 6) {
+      setErro('O RM deve conter exatamente 6 dígitos.');
+      return;
+    }
+    if (!nome.trim()) {
+      setErro('Informe seu nome para continuar.');
+      return;
+    }
+    setErro('');
+    setLoading(true);
+
+    setTimeout(() => {
+      setUser({ rm, nome: nome.trim() });
+      router.push('/cardapio');
+      setLoading(false);
+    }, 1000);
+  }
 
   return (
-    <ScreenContainer>
-      <View style={styles.heroCard}>
-        <Image source={require('../assets/images/icon.png')} style={styles.heroImage} resizeMode="contain" />
-        <View style={styles.heroCopy}>
-          <Text style={styles.heroTitle}>Bem-vindo</Text>
-        </View>
-      </View>
+    <SafeAreaView style={styles.safe}>
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          {/* Logo */}
+          <View style={styles.logoWrap}>
+            <LogoFiap width={130} height={35} />
+          </View>
 
-      <View style={styles.actions}>
-        <PrimaryButton title="Login" onPress={() => router.push('/cardapio')} />
-      </View>
-    </ScreenContainer>
+          {/* Heading */}
+          <View style={styles.headingWrap}>
+            <Text style={styles.headingAccent}>CANTINA</Text>
+          </View>
+
+          {/* Card */}
+          <View style={styles.card}>
+            {/* RM */}
+            <Text style={styles.label}>USUÁRIO (RM)*</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="RM000000"
+              placeholderTextColor="#75838B"
+              keyboardType="numeric"
+              value={rm}
+              onChangeText={handleRmChange}
+              maxLength={8}
+            />
+
+            {/* Nome */}
+            <Text style={[styles.label, { marginTop: 20 }]}>NOME COMPLETO*</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Seu nome completo"
+              placeholderTextColor="#75838B"
+              autoCapitalize="words"
+              value={nome}
+              onChangeText={setNome}
+            />
+
+            {/* Erro */}
+            {erro !== '' && <Text style={styles.erro}>{erro}</Text>}
+
+            {/* Botão */}
+            <TouchableOpacity
+              style={[styles.button, loading && styles.buttonDisabled]}
+              activeOpacity={0.8}
+              onPress={handleEntrar}
+              disabled={loading}
+            >
+              <Text style={styles.buttonText}>
+                {loading ? 'ENTRANDO...' : 'ENTRAR'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+
+      {/* Rodapé */}
+      <Text style={styles.footer}>PEÇA SEM FILA</Text>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  heroCard: {
+  safe: {
+    flex: 1,
+    backgroundColor: '#000000',
+  },
+  flex: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    paddingBottom: 60,
+  },
+  logoWrap: {
     alignItems: 'center',
-    backgroundColor: theme.colors.surface,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.lg,
-    borderWidth: 1,
-    gap: theme.spacing.md,
-    padding: theme.spacing.lg,
+    marginBottom: 32,
   },
-  heroCopy: {
-    gap: theme.spacing.xs,
+  headingWrap: {
+    alignItems: 'center',
+    marginBottom: 36,
   },
-  heroImage: {
-    height: 72,
-    width: 72,
+  headingAccent: {
+    color: '#ED145B',
+    fontSize: 24,
+    fontWeight: '400',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
   },
-  heroTitle: {
-    color: theme.colors.text,
-    fontSize: 20,
-    fontWeight: '700',
+  card: {
+    backgroundColor: '#111416',
+    borderRadius: 2,
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+  },
+  label: {
+    color: '#B7B7B7',
+    fontSize: 11,
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 8,
+  },
+  input: {
+    height: 48,
+    borderWidth: 0.7,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 0,
+    backgroundColor: 'transparent',
+    color: '#ACC1CC',
+    fontSize: 15,
+    paddingHorizontal: 12,
+  },
+  erro: {
+    color: '#ED145B',
+    fontSize: 12,
+    marginTop: 12,
+  },
+  button: {
+    backgroundColor: '#ED145B',
+    height: 52,
+    borderRadius: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 28,
+  },
+  buttonDisabled: {
+    opacity: 0.6,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    fontWeight: '500',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+  },
+  footer: {
+    color: '#75838B',
+    fontSize: 11,
     textAlign: 'center',
-  },
-  actions: {
-    gap: theme.spacing.sm,
+    letterSpacing: 1,
+    position: 'absolute',
+    bottom: 24,
+    left: 0,
+    right: 0,
   },
 });

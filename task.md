@@ -31,7 +31,7 @@ Fluxo principal que deve funcionar do inicio ao fim:
 - [x] Estrutura organizada
 - [x] Uso de `View`, `Text`, `Image` e `TouchableOpacity`
 - [x] Componentizacao real
-- [ ] Uso de `useState` e/ou `useEffect`
+- [x] Uso de `useState` e/ou `useEffect`
 - [x] Estilizacao com `StyleSheet`
 - [x] Pelo menos 3 telas com Expo Router
 - [x] Navegacao funcional entre todas as telas
@@ -67,28 +67,28 @@ Definicao de pronto:
 - [x] Navegacao base esta funcional
 
 ### Participante 2 - Login e Dados do Usuario
-Usuario responsavel: `Participante 2`
+Usuario responsavel: `Henrique Mandrick`
 
 Objetivo:
 Implementar a entrada do usuario no fluxo do app de forma simples e mockada.
 
 Tarefas:
 
-- [ ] Criar a tela de login com identidade visual coerente
-- [ ] Adicionar campos mockados como nome e RM ou identificador do aluno
-- [ ] Validar se os campos obrigatorios foram preenchidos
-- [ ] Exibir mensagem de erro quando houver campos vazios
-- [ ] Exibir feedback visual ao prosseguir com sucesso
-- [ ] Salvar os dados do usuario em estado local
-- [ ] Encaminhar o usuario para a tela de cardapio apos login valido
-- [ ] Garantir que a tela funcione em telas menores sem quebrar layout
-- [ ] Integrar o login ao fluxo criado pelo Participante 1
+- [x] Criar a tela de login com identidade visual coerente
+- [x] Adicionar campos mockados como nome e RM ou identificador do aluno
+- [x] Validar se os campos obrigatorios foram preenchidos
+- [x] Exibir mensagem de erro quando houver campos vazios
+- [x] Exibir feedback visual ao prosseguir com sucesso
+- [x] Salvar os dados do usuario em estado local
+- [x] Encaminhar o usuario para a tela de cardapio apos login valido
+- [x] Garantir que a tela funcione em telas menores sem quebrar layout
+- [x] Integrar o login ao fluxo criado pelo Participante 1
 
 Definicao de pronto:
 
-- [ ] Usuario consegue preencher os dados
-- [ ] Validacao minima funciona
-- [ ] Navegacao para o cardapio funciona
+- [x] Usuario consegue preencher os dados
+- [x] Validacao minima funciona
+- [x] Navegacao para o cardapio funciona
 
 ### Participante 3 - Cardapio, Produtos e Carrinho
 Usuario responsavel: `Participante 3`
@@ -171,7 +171,7 @@ Definicao de pronto:
 ## Dependencias Entre Participantes
 
 - [x] Particpante 1 deve concluir a base antes de bloquear o restante do time
-- [ ] Particpante 2 depende da navegacao inicial criada pelo Particpante 1
+- [x] Particpante 2 depende da navegacao inicial criada pelo Particpante 1
 - [ ] Particpante 3 depende da estrutura de tela e rotas criadas pelo Particpante 1
 - [ ] Particpante 4 depende dos dados de pedido organizados pelo Particpante 3
 - [ ] Particpante 5 depende de telas minimamente prontas dos Particpantes 1, 2, 3 e 4

@@ -2,11 +2,12 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
+import { UserProvider } from '../contexts/UserContext';
 import { theme } from '../styles/theme';
 
 export default function RootLayout() {
   return (
-    <>
+    <UserProvider>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
@@ -23,6 +24,6 @@ export default function RootLayout() {
         <Stack.Screen name="pedido-final" />
         <Stack.Screen name="conta" />
       </Stack>
-    </>
+    </UserProvider>
   );
 }

@@ -3,21 +3,28 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { PrimaryButton } from '../components/PrimaryButton';
 import { ScreenContainer } from '../components/ScreenContainer';
+import { useUser } from '../contexts/UserContext';
 import { theme } from '../styles/theme';
 
 export default function ContaScreen() {
   const router = useRouter();
+  const { user, setUser } = useUser();
+
+  function handleSair() {
+    setUser(null);
+    router.replace('/login');
+  }
 
   return (
     <ScreenContainer showFooter currentRoute="/conta">
       <View style={styles.accountCard}>
-        <Text style={styles.accountTitle}>Conta</Text>
-        <Text style={styles.accountText}>Nome: Aluno FIAP</Text>
-        <Text style={styles.accountText}>RM: 12345</Text>
+        <Text style={styles.accountTitle}>Minha Conta</Text>
+        <Text style={styles.accountText}>Nome: {user?.nome ?? '—'}</Text>
+        <Text style={styles.accountText}>RM: {user?.rm ?? '—'}</Text>
       </View>
 
       <View style={styles.actions}>
-        <PrimaryButton title="Sair" onPress={() => router.replace('/login')} />
+        <PrimaryButton title="Sair" onPress={handleSair} />
       </View>
     </ScreenContainer>
   );
