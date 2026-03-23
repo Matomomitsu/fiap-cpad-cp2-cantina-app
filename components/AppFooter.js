@@ -12,16 +12,22 @@ const footerItems = [
     activeIcon: 'restaurant',
   },
   {
-    label: 'Cart',
+    label: 'Carrinho',
     route: '/pagamento',
     icon: 'cart-outline',
     activeIcon: 'cart',
   },
   {
-    label: 'Orders',
+    label: 'Pedidos',
     route: '/pedido-final',
     icon: 'receipt-outline',
     activeIcon: 'receipt',
+  },
+  {
+    label: 'Conta',
+    route: '/conta',
+    icon: 'person-outline',
+    activeIcon: 'person',
   },
 ];
 

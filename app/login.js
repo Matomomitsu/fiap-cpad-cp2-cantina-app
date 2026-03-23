@@ -9,7 +9,7 @@ export default function LoginScreen() {
   const router = useRouter();
 
   return (
-    <ScreenContainer title="Login">
+    <ScreenContainer>
       <View style={styles.heroCard}>
         <Image source={require('../assets/images/icon.png')} style={styles.heroImage} resizeMode="contain" />
         <View style={styles.heroCopy}>

@@ -5,7 +5,7 @@ import { theme } from '../styles/theme';
 
 export default function PedidoFinalScreen() {
   return (
-    <ScreenContainer title="Pedido final" showHeader showFooter currentRoute="/pedido-final">
+    <ScreenContainer showFooter currentRoute="/pedido-final">
       <View style={styles.ticketCard}>
         <Text style={styles.ticketLabel}>Senha de retirada</Text>
         <Text style={styles.ticketValue}>A-024</Text>

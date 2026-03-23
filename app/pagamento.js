@@ -11,7 +11,7 @@ export default function PagamentoScreen() {
   const router = useRouter();
 
   return (
-    <ScreenContainer title="Pagamento" showHeader showFooter currentRoute="/pagamento">
+    <ScreenContainer showFooter currentRoute="/pagamento">
       <View style={styles.optionsRow}>
         {paymentOptions.map((option) => (
           <View key={option} style={styles.optionChip}>

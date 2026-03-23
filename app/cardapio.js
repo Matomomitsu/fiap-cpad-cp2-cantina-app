@@ -15,7 +15,7 @@ export default function CardapioScreen() {
   const router = useRouter();
 
   return (
-    <ScreenContainer title="Cardapio" showHeader showFooter currentRoute="/cardapio">
+    <ScreenContainer showFooter currentRoute="/cardapio">
       <View style={styles.list}>
         {previewItems.map((item) => (
           <View key={item.title} style={styles.itemCard}>

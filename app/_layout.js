@@ -21,6 +21,7 @@ export default function RootLayout() {
         <Stack.Screen name="cardapio" />
         <Stack.Screen name="pagamento" />
         <Stack.Screen name="pedido-final" />
+        <Stack.Screen name="conta" />
       </Stack>
     </>
   );
