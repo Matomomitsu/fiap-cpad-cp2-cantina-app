@@ -1,11 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { theme } from '../styles/theme';
 
 export function PrimaryButton({
   title,
   onPress,
-  variant = 'primary',
   disabled = false,
   style,
 }) {
@@ -16,45 +15,76 @@ export function PrimaryButton({
       onPress={onPress}
       style={[
         styles.button,
-        variant === 'primary' ? styles.primaryButton : styles.secondaryButton,
+        styles.buttonShadow,
         disabled && styles.disabledButton,
         style,
       ]}>
-      <Text style={[styles.label, variant === 'primary' ? styles.primaryLabel : styles.secondaryLabel]}>
-        {title}
-      </Text>
+      <View style={styles.buttonFill}>
+        <View style={styles.topTint} />
+        <View style={styles.bottomTint} />
+        <Text style={[styles.label, styles.buttonLabel]}>{title}</Text>
+      </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    alignItems: 'center',
     borderRadius: theme.radius.pill,
-    justifyContent: 'center',
-    minHeight: 52,
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.sm,
+    minHeight: 64,
+    width: '100%',
   },
-  primaryButton: {
+  buttonShadow: {
+    elevation: 8,
+    shadowColor: theme.colors.primary,
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 16,
+  },
+  buttonFill: {
+    alignItems: 'center',
     backgroundColor: theme.colors.primary,
+    borderRadius: theme.radius.pill,
+    flex: 1,
+    flexDirection: 'row',
+    gap: 12,
+    justifyContent: 'center',
+    overflow: 'hidden',
+    paddingHorizontal: theme.spacing.lg,
+    paddingVertical: 20,
   },
-  secondaryButton: {
-    backgroundColor: theme.colors.surface,
-    borderColor: theme.colors.border,
-    borderWidth: 1,
+  topTint: {
+    backgroundColor: theme.colors.primaryAlt,
+    height: '72%',
+    left: 0,
+    opacity: 0.32,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    transform: [{ skewY: '-7deg' }],
   },
-  disabledButton: {
-    opacity: 0.5,
+  bottomTint: {
+    backgroundColor: '#C90F4E',
+    bottom: -12,
+    height: '58%',
+    left: 0,
+    opacity: 0.22,
+    position: 'absolute',
+    right: 0,
+    transform: [{ skewY: '7deg' }],
   },
   label: {
     fontSize: 15,
     fontWeight: '700',
+    zIndex: 1,
   },
-  primaryLabel: {
+  buttonLabel: {
     color: theme.colors.text,
   },
-  secondaryLabel: {
-    color: theme.colors.text,
+  disabledButton: {
+    opacity: 0.5,
   },
 });
