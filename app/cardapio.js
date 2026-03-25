@@ -8,9 +8,11 @@ import { SegmentedButtons } from "../components/FilterButton";
 import { FoodCard } from "../components/InfoCard";
 import { theme } from "../styles/theme";
 import { HeaderCardapio } from "../components/HeaderMenu";
+import { useCart } from '../contexts/CartContext';
+import { formatPrice } from '../utils/formatPrice';
 
 export const previewItems = {
-  lanches: [
+  Lanches: [
     {
       title: "Pizza com batata frita",
       price: 7500,
@@ -27,7 +29,7 @@ export const previewItems = {
       description: "Hambúrguer + batata + refrigerante",
     },
   ],
-  bebidas: [
+  Bebidas: [
     {
       title: "Coca-Cola lata",
       price: 600,
@@ -44,7 +46,7 @@ export const previewItems = {
       description: "Sem gás 500ml",
     },
   ],
-  doces: [
+  Doces: [
     {
       title: "Brigadeiro",
       price: 400,
@@ -66,9 +68,9 @@ export const previewItems = {
 export default function CardapioScreen() {
   const router = useRouter();
 
-  const [category, setCategory] = useState("lanches");
+  const [category, setCategory] = useState("Lanches");
 
-  const [cart, setCart] = useState({});
+  const { cart, setCart } = useCart();
 
   function addItem(item) {
     setCart((prev) => {
@@ -123,13 +125,6 @@ export default function CardapioScreen() {
     );
   }
 
-  function formatPrice(value) {
-    return (value / 100).toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
-  }
-
   const hasItems = Object.keys(cart).length > 0;
 
   return (
@@ -137,12 +132,12 @@ export default function CardapioScreen() {
       <HeaderCardapio total={getTotal()} />
 
       <SegmentedButtons
-        options={["lanches", "bebidas", "doces"]}
+        options={["Lanches", "Bebidas", "Doces"]}
         onChange={setCategory}
       />
 
       <Text style={styles.sectionTitle}>
-        {category.charAt(0).toUpperCase() + category.slice(1)}s
+        {category.charAt(0).toUpperCase() + category.slice(1)}
       </Text>
 
       <ScrollView contentContainerStyle={styles.list}>

@@ -4,14 +4,17 @@ import { StyleSheet, Text, View } from 'react-native';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { ScreenContainer } from '../components/ScreenContainer';
 import { useUser } from '../contexts/UserContext';
+import { useCart } from '../contexts/CartContext';
 import { theme } from '../styles/theme';
 
 export default function ContaScreen() {
   const router = useRouter();
   const { user, setUser } = useUser();
+  const {cart, setCart} = useCart();
 
   function handleSair() {
     setUser(null);
+    setCart({});
     router.replace('/login');
   }
 

@@ -5,47 +5,41 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { PrimaryButton } from '../components/PrimaryButton';
 import { ScreenContainer } from '../components/ScreenContainer';
+import { useCart } from '../contexts/CartContext';
 import { theme } from '../styles/theme';
+import { formatPrice } from '../utils/formatPrice';
 
 const FORMAS_PAGAMENTO = [
   {
     id: 'pix',
     titulo: 'PIX',
-    subtitulo: 'Aprovação Instantânea',
     icone: 'qr-code-outline',
   },
   {
     id: 'cartao',
     titulo: 'Cartão de Crédito',
-    subtitulo: 'Final 4400 • Mastercard',
     icone: 'card-outline',
   },
   {
     id: 'saldo',
     titulo: 'Saldo na Carteira',
-    subtitulo: 'Saldo disponível: R$ 50,00',
     icone: 'wallet-outline',
   },
-];
-
-// Dados mockados para desenvolvimento isolado
-const ITENS_MOCK = [
-  { id: '1', nome: 'Coxinha',         quantidade: 1, preco: 8.5 },
-  { id: '2', nome: 'Suco de Laranja', quantidade: 1, preco: 8.5 },
 ];
 
 export default function PagamentoScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
 
-  const itensPedido = params.itens ? JSON.parse(params.itens) : ITENS_MOCK;
+  const itensPedido = params.itens ? JSON.parse(params.itens) : [];
 
+  const { cart } = useCart();
   const [formaSelecionada, setFormaSelecionada] = useState(null);
   const [erro, setErro] = useState('');
   const [processando, setProcessando] = useState(false);
 
-  const total = itensPedido.reduce(
-    (acc, item) => acc + item.preco * item.quantidade,
+  const total = Object.values(cart).reduce(
+    (acc, { item, quantity }) => acc + item.price * quantity,
     0
   );
 
@@ -90,20 +84,20 @@ export default function PagamentoScreen() {
 
         {/* Resumo do pedido */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Resumo do Pedido</Text>
+          <Text style={styles.sectionTitle}>Itens no Carrinho</Text>
 
           <View style={styles.card}>
-            {itensPedido.map((item, index) => (
-              <View key={item.id}>
+            {Object.values(cart).map(({ item, quantity }, index) => (
+              <View key={item.title}>
                 <View style={styles.itemRow}>
                   <Text style={styles.itemNome}>
-                    {item.quantidade}x {item.nome}
+                    {quantity}x {item.title}
                   </Text>
                   <Text style={styles.itemPreco}>
-                    R$ {(item.preco * item.quantidade).toFixed(2).replace('.', ',')}
+                    {formatPrice(item.price * quantity)}
                   </Text>
                 </View>
-                {index < itensPedido.length - 1 && (
+                {index < Object.values(cart).length - 1 && (
                   <View style={styles.divider} />
                 )}
               </View>
@@ -114,7 +108,7 @@ export default function PagamentoScreen() {
             <View style={styles.totalRow}>
               <Text style={styles.totalLabel}>Total a pagar</Text>
               <Text style={styles.totalValor}>
-                R$ {total.toFixed(2).replace('.', ',')}
+                {formatPrice(total)}
               </Text>
             </View>
           </View>
@@ -149,7 +143,6 @@ export default function PagamentoScreen() {
                     {/* Texto */}
                     <View style={styles.pagamentoInfo}>
                       <Text style={styles.pagamentoTitulo}>{forma.titulo}</Text>
-                      <Text style={styles.pagamentoSubtitulo}>{forma.subtitulo}</Text>
                     </View>
 
                     {/* Radio */}
