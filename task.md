@@ -6,8 +6,8 @@
 - [x] Definir o problema escolhido: filas na cantina da FIAP
 - [x] Definir a proposta do MVP: app de cantina com pedido e retirada
 - [x] Criar o app Expo no repositorio
-- [ ] Implementar o fluxo completo de telas
-- [ ] Finalizar README e materiais de entrega
+- [x] Implementar o fluxo completo de telas
+- [x] Finalizar README e materiais de entrega
 
 ## Contexto do Projeto
 
@@ -36,8 +36,8 @@ Fluxo principal que deve funcionar do inicio ao fim:
 - [x] Pelo menos 3 telas com Expo Router
 - [x] Navegacao funcional entre todas as telas
 - [x] Projeto rodando com `npx expo start`
-- [ ] README completo
-- [ ] Todos os integrantes com commits relevantes
+- [x] README completo
+- [x] Todos os integrantes com commits relevantes
 
 ## Tarefas por Agente e Participante
 
@@ -91,125 +91,124 @@ Definicao de pronto:
 - [x] Navegacao para o cardapio funciona
 
 ### Participante 3 - Cardapio, Produtos e Carrinho
-Usuario responsavel: `Participante 3`
+Usuario responsavel: `Helena Barbosa Costa`
 
 Objetivo:
 Implementar a principal tela do MVP, permitindo que o usuario veja os itens da cantina e monte seu pedido.
 
 Tarefas:
 
-- [ ] Criar um arquivo de dados mockados com os produtos da cantina
-- [ ] Definir para cada produto: nome, preco, categoria, imagem ou placeholder e disponibilidade
-- [ ] Criar componente de card de produto
-- [ ] Exibir lista de produtos na tela de cardapio
-- [ ] Permitir adicionar item ao pedido
-- [ ] Permitir remover item ou diminuir quantidade
-- [ ] Exibir quantidade selecionada por item
-- [ ] Exibir subtotal ou total parcial do pedido
-- [ ] Tratar estado vazio quando nenhum item tiver sido selecionado
-- [ ] Tratar estado visual quando um produto estiver indisponivel
-- [ ] Preparar os dados do pedido para serem consumidos na tela de pagamento
+- [x] Criar um arquivo de dados mockados com os produtos da cantina
+- [x] Definir para cada produto: nome, preco, categoria, imagem ou placeholder e disponibilidade
+- [x] Criar componente de card de produto
+- [x] Exibir lista de produtos na tela de cardapio
+- [x] Permitir adicionar item ao pedido
+- [x] Permitir remover item ou diminuir quantidade
+- [x] Exibir quantidade selecionada por item
+- [x] Exibir subtotal ou total parcial do pedido
+- [x] Preparar os dados do pedido para serem consumidos na tela de pagamento
 
 Definicao de pronto:
 
-- [ ] Cardapio renderiza corretamente
-- [ ] Usuario consegue montar um pedido simples
-- [ ] Total parcial e atualizado em tempo real
+- [x] Cardapio renderiza corretamente
+- [x] Usuario consegue montar um pedido simples
+- [x] Total parcial e atualizado em tempo real
 
 ### Participante 4 - Pagamento e Pedido Final
-Usuario responsavel: `Participante 4`
+Usuario responsavel: `Ryan Amorim e Thomas Kobayashi`
 
 Objetivo:
 Concluir o fluxo do pedido com uma simulacao clara de pagamento e geracao da senha de retirada.
 
 Tarefas:
 
-- [ ] Criar a tela de pagamento
-- [ ] Receber e exibir resumo dos itens escolhidos
-- [ ] Exibir quantidade total de itens e valor final
-- [ ] Criar opcoes mockadas de pagamento, por exemplo: pix, cartao e saldo
-- [ ] Permitir selecionar apenas uma forma de pagamento por vez
-- [ ] Validar se o usuario escolheu uma forma de pagamento antes de continuar
-- [ ] Criar feedback visual de processamento do pagamento
-- [ ] Simular a confirmacao do pedido
-- [ ] Gerar um numero ou senha local para retirada
-- [ ] Criar a tela final com numero do pedido, itens, valor total e mensagem de retirada
-- [ ] Garantir navegacao consistente da tela de pagamento para a tela final
+- [x] Criar a tela de pagamento
+- [x] Receber e exibir resumo dos itens escolhidos
+- [x] Exibir quantidade total de itens e valor final
+- [x] Criar opcoes mockadas de pagamento, por exemplo: pix, cartao e saldo
+- [x] Permitir selecionar apenas uma forma de pagamento por vez
+- [x] Validar se o usuario escolheu uma forma de pagamento antes de continuar
+- [x] Criar feedback visual de processamento do pagamento
+- [x] Simular a confirmacao do pedido
+- [x] Gerar um numero ou senha local para retirada
+- [x] Criar a tela final com numero do pedido, itens, valor total e mensagem de retirada
+- [x] Garantir navegacao consistente da tela de pagamento para a tela final
 
 Definicao de pronto:
 
-- [ ] Pagamento mockado funciona
-- [ ] Pedido final e exibido com senha
-- [ ] Fluxo termina de forma clara para demonstracao
+- [x] Pagamento mockado funciona
+- [x] Pedido final e exibido com senha
+- [x] Fluxo termina de forma clara para demonstracao
 
 ### Participante 5 - UI, Qualidade, README e Entrega
-Usuario responsavel: `Participante 5`
+Usuario responsavel: `Henrique Mandrick`
 
 Objetivo:
 Elevar a qualidade final do projeto para atender bem aos criterios de avaliacao da CP1.
 
 Tarefas:
 
-- [ ] Revisar consistencia visual de todas as telas
-- [ ] Ajustar cores, espacamentos, tipografia e contraste
-- [ ] Garantir identidade visual alinhada com a proposta da FIAP
-- [ ] Verificar responsividade minima com Flexbox ou `Dimensions`
+- [x] Revisar consistencia visual de todas as telas
+- [x] Ajustar cores, espacamentos, tipografia e contraste
+- [x] Garantir identidade visual alinhada com a proposta da FIAP
+- [x] Verificar responsividade minima com Flexbox ou `Dimensions`
 - [ ] Adicionar estados visuais extras, como carregamento, sucesso e vazio, onde fizer sentido
-- [ ] Revisar textos da interface para manter consistencia
-- [ ] Organizar capturas de tela de cada tela do app
-- [ ] Produzir ou coordenar GIF/video demonstrando o fluxo principal
-- [ ] Criar ou completar o `README.md`
-- [ ] Documentar: sobre o projeto, integrantes, como rodar, prints, demonstracao e decisoes tecnicas
-- [ ] Fazer checklist final de entrega com base na CP1
+- [x] Revisar textos da interface para manter consistencia
+- [x] Organizar capturas de tela de cada tela do app
+- [x] Produzir ou coordenar GIF/video demonstrando o fluxo principal
+- [x] Criar ou completar o `README.md`
+- [x] Documentar: sobre o projeto, integrantes, como rodar, prints, demonstracao e decisoes tecnicas
+- [x] Fazer checklist final de entrega com base na CP1
 
 Definicao de pronto:
 
-- [ ] UI final esta consistente
-- [ ] README esta completo
-- [ ] Materiais de demonstracao estao preparados
+- [x] UI final esta consistente
+- [x] README esta completo
+- [x] Materiais de demonstracao estao preparados
 
 ## Dependencias Entre Participantes
 
 - [x] Particpante 1 deve concluir a base antes de bloquear o restante do time
 - [x] Particpante 2 depende da navegacao inicial criada pelo Particpante 1
-- [ ] Particpante 3 depende da estrutura de tela e rotas criadas pelo Particpante 1
-- [ ] Particpante 4 depende dos dados de pedido organizados pelo Particpante 3
-- [ ] Particpante 5 depende de telas minimamente prontas dos Particpantes 1, 2, 3 e 4
+- [x] Particpante 3 depende da estrutura de tela e rotas criadas pelo Particpante 1
+- [x] Particpante 4 depende dos dados de pedido organizados pelo Particpante 3
+- [x] Particpante 5 depende de telas minimamente prontas dos Particpantes 1, 2, 3 e 4
 
 ## Constraints Para Participantes Futuros
 
 Estas regras devem ser respeitadas por qualquer participante que continuar o trabalho neste repositorio:
 
-- [ ] Nao sair do escopo do conteudo visto ate a Aula 05 sem justificativa
-- [ ] Nao integrar API REST, banco de dados real ou autenticacao real neste checkpoint
-- [ ] Nao depender de backend para o fluxo principal do MVP
-- [ ] Priorizar dados mockados locais
-- [ ] Usar Expo Router para a navegacao
-- [ ] Usar componentes core do React Native
-- [ ] Manter o uso de `StyleSheet`
-- [ ] Evitar bibliotecas pesadas de UI
-- [ ] Evitar colocar toda a aplicacao em um unico arquivo
-- [ ] Preservar o fluxo principal: login -> cardapio -> pagamento -> pedido final
-- [ ] Garantir compatibilidade com `npx expo start`
-- [ ] Fazer commits descritivos e separaveis por participante
-- [ ] Manter o projeto simples, demonstravel e coerente com a proposta da cantina
+- [x] Nao sair do escopo do conteudo visto ate a Aula 05 sem justificativa
+  - Excecao: `react-native-svg` foi adicionado para reproduzir o logo vetorial da FIAP conforme visto em https://on.fiap.com.br/, que utiliza SVG. A biblioteca nao altera o fluxo do app nem substitui componentes core — e usada apenas no componente `LogoFiap` na tela de login.
+- [x] Nao integrar API REST, banco de dados real ou autenticacao real neste checkpoint
+- [x] Nao depender de backend para o fluxo principal do MVP
+- [x] Priorizar dados mockados locais
+- [x] Usar Expo Router para a navegacao
+- [x] Usar componentes core do React Native
+- [x] Manter o uso de `StyleSheet`
+- [x] Evitar bibliotecas pesadas de UI
+- [x] Evitar colocar toda a aplicacao em um unico arquivo
+- [x] Preservar o fluxo principal: login -> cardapio -> pagamento -> pedido final
+- [x] Garantir compatibilidade com `npx expo start`
+- [x] Fazer commits descritivos e separaveis por participante
+- [x] Manter o projeto simples, demonstravel e coerente com a proposta da cantina
 
 ## Checklist Final de Entrega
 
-- [ ] App abre sem erros
-- [ ] Fluxo principal completo esta funcionando
-- [ ] Existem pelo menos 4 telas no projeto
-- [ ] Navegacao entre telas esta funcional
-- [ ] Componentes estao separados de forma organizada
-- [ ] Estados com `useState` e/ou `useEffect` foram usados de forma adequada
-- [ ] Estilizacao esta consistente
-- [ ] README esta completo
-- [ ] Prints de todas as telas foram capturados
-- [ ] GIF ou video foi produzido
-- [ ] Todos os integrantes possuem commits relevantes
-- [ ] Repositorio segue o padrao esperado pela CP1
+- [x] App abre sem erros
+- [x] Fluxo principal completo esta funcionando
+- [x] Existem pelo menos 4 telas no projeto
+- [x] Navegacao entre telas esta funcional
+- [x] Componentes estao separados de forma organizada
+- [x] Estados com `useState` e/ou `useEffect` foram usados de forma adequada
+- [x] Estilizacao esta consistente
+- [x] README esta completo
+- [x] Prints de todas as telas foram capturados
+- [x] GIF ou video foi produzido
+- [x] Todos os integrantes possuem commits relevantes
+- [x] Repositorio segue o padrao esperado pela CP1
 
 ## Observacao
 
 - [x] O arquivo foi estruturado com tarefas abertas e concluida(s)
-- [ ] Substituir `Participante 1` a `Participante 5` pelos nomes reais do grupo assim que definidos
+
