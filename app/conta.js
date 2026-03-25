@@ -5,6 +5,7 @@ import { PrimaryButton } from '../components/PrimaryButton';
 import { ScreenContainer } from '../components/ScreenContainer';
 import { useUser } from '../contexts/UserContext';
 import { useCart } from '../contexts/CartContext';
+import { useOrder } from '../contexts/OrderContext';
 import { theme } from '../styles/theme';
 
 export default function ContaScreen() {
