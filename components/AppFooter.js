@@ -7,25 +7,25 @@ import { theme } from '../styles/theme';
 const footerItems = [
   {
     label: 'Menu',
-    route: '/cardapio',
+    route: '/tabs/cardapio',
     icon: 'restaurant-outline',
     activeIcon: 'restaurant',
   },
   {
     label: 'Carrinho',
-    route: '/pagamento',
+    route: '/tabs/pagamento',
     icon: 'cart-outline',
     activeIcon: 'cart',
   },
   {
     label: 'Pedidos',
-    route: '/pedido-final',
+    route: '/tabs/pedido-final',
     icon: 'receipt-outline',
     activeIcon: 'receipt',
   },
   {
     label: 'Conta',
-    route: '/conta',
+    route: '/tabs/conta',
     icon: 'person-outline',
     activeIcon: 'person',
   },

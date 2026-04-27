@@ -1,26 +1,40 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { ScreenContainer } from '../components/ScreenContainer';
-import { formatPrice } from '../utils/formatPrice';
-import { useOrder } from '../contexts/OrderContext';
-import { theme } from '../styles/theme';
+import { ScreenContainer } from '../../components/ScreenContainer';
+import { useOrder } from '../../contexts/OrderContext';
+import { theme } from '../../styles/theme';
+import { formatPrice } from '../../utils/formatPrice';
+import {
+    ORDER_STATUS_LABELS,
+    PAYMENT_METHOD_LABELS,
+    formatOrderDateTime,
+} from '../../utils/order';
 
 export default function PedidoFinalScreen() {
-  const {order} = useOrder();
+  const { activeOrder } = useOrder();
 
-  const itens = order?.itens || [];
-  const total = order?.total || '0.00';
-  const formaPagamento = order?.formaPagamento || '';
-  const numeroPedido = order?.senha || '---';
+  const itens = activeOrder?.itens || [];
+  const total = activeOrder?.total || 0;
+  const formaPagamento = activeOrder?.formaPagamento || '';
+  const numeroPedido = activeOrder?.senha || '---';
+  const status = activeOrder?.status || '';
+  const dataPedido = activeOrder?.createdAt || null;
 
-  const formas = {
-    pix: 'PIX',
-    cartao: 'Cartão de Crédito',
-    saldo: 'Saldo na Carteira',
-  };
+  if (!activeOrder) {
+    return (
+      <ScreenContainer showFooter currentRoute="/tabs/pedido-final">
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyTitle}>Nenhum pedido em andamento</Text>
+          <Text style={styles.emptyText}>
+            Quando um pedido for confirmado, ele aparecerá aqui até ser finalizado.
+          </Text>
+        </View>
+      </ScreenContainer>
+    );
+  }
 
   return (
-    <ScreenContainer showFooter currentRoute="/pedido-final">
+    <ScreenContainer showFooter currentRoute="/tabs/pedido-final">
 
       {/* Senha */}
       <View style={styles.ticketCard}>
@@ -32,6 +46,18 @@ export default function PedidoFinalScreen() {
       <Text style={styles.mensagem}>
         Retire seu pedido no balcão quando o número for chamado
       </Text>
+
+      <View style={styles.metaRow}>
+        <View style={styles.metaCard}>
+          <Text style={styles.metaLabel}>Data do pedido</Text>
+          <Text style={styles.metaValue}>{formatOrderDateTime(dataPedido)}</Text>
+        </View>
+
+        <View style={styles.metaCard}>
+          <Text style={styles.metaLabel}>Status</Text>
+          <Text style={styles.metaValue}>{ORDER_STATUS_LABELS[status] || status}</Text>
+        </View>
+      </View>
 
       {/* Resumo do pedido */}
       <ScrollView style={styles.card} showsVerticalScrollIndicator={false}>
@@ -61,7 +87,7 @@ export default function PedidoFinalScreen() {
             </View>
 
         <Text style={styles.pagamento}>
-          Forma de pagamento: {formas[formaPagamento] || formaPagamento}
+          Forma de pagamento: {PAYMENT_METHOD_LABELS[formaPagamento] || formaPagamento}
         </Text>
       </ScrollView>
 
@@ -97,6 +123,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: theme.colors.textMuted,
     marginVertical: theme.spacing.md,
+  },
+  metaRow: {
+    flexDirection: 'row',
+    gap: theme.spacing.sm,
+  },
+  metaCard: {
+    backgroundColor: theme.colors.surface,
+    borderColor: theme.colors.border,
+    borderRadius: theme.radius.md,
+    borderWidth: 1,
+    flex: 1,
+    gap: 6,
+    padding: theme.spacing.md,
+  },
+  metaLabel: {
+    color: theme.colors.textMuted,
+    fontSize: 12,
+    textTransform: 'uppercase',
+  },
+  metaValue: {
+    color: theme.colors.text,
+    fontSize: 14,
+    fontWeight: '700',
   },
 
   // Card resumo
@@ -152,5 +201,25 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontSize: 12,
     color: theme.colors.textMuted,
+  },
+  emptyState: {
+    alignItems: 'center',
+    backgroundColor: theme.colors.surface,
+    borderColor: theme.colors.border,
+    borderRadius: theme.radius.md,
+    borderWidth: 1,
+    gap: theme.spacing.sm,
+    justifyContent: 'center',
+    padding: theme.spacing.xl,
+  },
+  emptyTitle: {
+    color: theme.colors.text,
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  emptyText: {
+    color: theme.colors.textMuted,
+    textAlign: 'center',
   },
 });

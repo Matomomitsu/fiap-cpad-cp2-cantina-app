@@ -3,8 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { CartProvider } from '../contexts/CartContext';
-import { UserProvider } from '../contexts/UserContext';
 import { OrderProvider } from '../contexts/OrderContext';
+import { UserProvider } from '../contexts/UserContext';
 import { theme } from '../styles/theme';
 
 export default function RootLayout() {
@@ -22,11 +22,13 @@ export default function RootLayout() {
               },
             }}>
             <Stack.Screen name="index" />
-            <Stack.Screen name="login" />
-            <Stack.Screen name="cardapio" />
-            <Stack.Screen name="pagamento" />
-            <Stack.Screen name="pedido-final" />
-            <Stack.Screen name="conta" />
+            <Stack.Screen name="auth/login" />
+            <Stack.Screen name="tabs/cardapio" />
+            <Stack.Screen name="tabs/pagamento" />
+            <Stack.Screen name="tabs/pedido-final" />
+            <Stack.Screen name="tabs/conta" />
+            <Stack.Screen name="tabs/historico" />
+            <Stack.Screen name="tabs/detalhe-pedido" />
           </Stack>
         </OrderProvider>
       </CartProvider>
