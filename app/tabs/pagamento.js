@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { PrimaryButton } from '../components/PrimaryButton';
-import { ScreenContainer } from '../components/ScreenContainer';
-import { useCart } from '../contexts/CartContext';
-import { useOrder } from '../contexts/OrderContext';
-import { theme } from '../styles/theme';
-import { formatPrice } from '../utils/formatPrice';
+import { PrimaryButton } from '../../components/PrimaryButton';
+import { ScreenContainer } from '../../components/ScreenContainer';
+import { useCart } from '../../contexts/CartContext';
+import { useOrder } from '../../contexts/OrderContext';
+import { theme } from '../../styles/theme';
+import { formatPrice } from '../../utils/formatPrice';
 
 const FORMAS_PAGAMENTO = [
   {
@@ -30,12 +30,8 @@ const FORMAS_PAGAMENTO = [
 
 export default function PagamentoScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams();
-
-  const itensPedido = params.itens ? JSON.parse(params.itens) : [];
-
   const { cart, setCart } = useCart();
-  const { setOrder } = useOrder();
+  const { startOrder } = useOrder();
   const [formaSelecionada, setFormaSelecionada] = useState(null);
   const [erro, setErro] = useState('');
   const [processando, setProcessando] = useState(false);
@@ -55,24 +51,21 @@ export default function PagamentoScreen() {
     setErro('');
     setProcessando(true);
 
-    setOrder({
+    startOrder({
       itens: itensCarrinho,
       total,
       formaPagamento: formaSelecionada,
-      senha: Math.floor(1000 + Math.random() * 9000).toString(),
     });
 
     setTimeout(() => {
-      router.push({
-        pathname: '/pedido-final'
-      });
+      router.push('/tabs/pedido-final');
       setCart({});
       setProcessando(false);
     }, 1500);
   }
 
   return (
-    <ScreenContainer showFooter currentRoute="/pagamento">
+    <ScreenContainer showFooter currentRoute="/tabs/pagamento">
 
       {/* Botão voltar */}
       <TouchableOpacity

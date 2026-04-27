@@ -9,8 +9,8 @@ import {
   View,
 } from 'react-native';
 
-import { LogoFiap } from '../components/LogoFiap';
-import { useUser } from '../contexts/UserContext';
+import { LogoFiap } from '../../components/LogoFiap';
+import { useUser } from '../../contexts/UserContext';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -45,7 +45,7 @@ export default function LoginScreen() {
 
     setTimeout(() => {
       setUser({ rm, nome: nome.trim() });
-      router.push('/cardapio');
+      router.push('/tabs/cardapio');
       setLoading(false);
     }, 1000);
   }
