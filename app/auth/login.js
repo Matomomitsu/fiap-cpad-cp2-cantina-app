@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,102 +14,127 @@ import {
 
 import { LogoFiap } from '../../components/LogoFiap';
 import { useUser } from '../../contexts/UserContext';
+import { loginUser } from '../../services/authService';
 
 export default function LoginScreen() {
   const router = useRouter();
   const { setUser } = useUser();
-  const [rm, setRm] = useState('RM');
-  const [nome, setNome] = useState('');
+
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
   const [loading, setLoading] = useState(false);
 
-  function handleRmChange(text) {
-    // Sempre manter o prefixo "RM"
-    if (!text.startsWith('RM')) {
-      text = 'RM';
+  async function handleEntrar() {
+    // Validações locais
+    if (!email.trim()) {
+      setErro('Informe seu e-mail.');
+      return;
     }
-    // Extrair só os dígitos depois do prefixo, limitar a 6
-    const digits = text.slice(2).replace(/[^0-9]/g, '').slice(0, 6);
-    setRm('RM' + digits);
-  }
+    if (!senha) {
+      setErro('Informe sua senha.');
+      return;
+    }
 
-  function handleEntrar() {
-    const digits = rm.slice(2);
-    if (digits.length !== 6) {
-      setErro('O RM deve conter exatamente 6 dígitos.');
-      return;
-    }
-    if (!nome.trim()) {
-      setErro('Informe seu nome para continuar.');
-      return;
-    }
     setErro('');
     setLoading(true);
 
-    setTimeout(() => {
-      setUser({ rm, nome: nome.trim() });
-      router.push('/tabs/cardapio');
+    try {
+      const result = await loginUser({ email, senha });
+
+      if (!result.success) {
+        setErro(result.error);
+        setLoading(false);
+        return;
+      }
+
+      setUser(result.user);
+      router.replace('/tabs/cardapio');
+    } catch {
+      setErro('Ocorreu um erro. Tente novamente.');
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   }
 
   return (
     <View style={styles.safe}>
-      <ScrollView
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
-      >
-        {/* Logo */}
-        <View style={styles.logoWrap}>
-          <LogoFiap width={130} height={35} />
-        </View>
+        >
+          {/* Logo */}
+          <View style={styles.logoWrap}>
+            <LogoFiap width={130} height={35} />
+          </View>
 
-        {/* Heading */}
-        <View style={styles.headingWrap}>
-          <Text style={styles.headingAccent}>CANTINA</Text>
-        </View>
+          {/* Heading */}
+          <View style={styles.headingWrap}>
+            <Text style={styles.headingAccent}>CANTINA</Text>
+            <Text style={styles.headingSub}>Faça login para continuar</Text>
+          </View>
 
-        {/* Card */}
-        <View style={styles.card}>
-          {/* RM */}
-          <Text style={styles.label}>USUÁRIO (RM)*</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="RM000000"
-            placeholderTextColor="#75838B"
-            keyboardType="numeric"
-            value={rm}
-            onChangeText={handleRmChange}
-            maxLength={8}
-          />
+          {/* Card */}
+          <View style={styles.card}>
+            {/* Email */}
+            <Text style={styles.label}>E-MAIL *</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="seu@email.com"
+              placeholderTextColor="#75838B"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+              value={email}
+              onChangeText={(t) => { setEmail(t); setErro(''); }}
+            />
 
-          {/* Nome */}
-          <Text style={[styles.label, { marginTop: 20 }]}>NOME COMPLETO*</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Seu nome completo"
-            placeholderTextColor="#75838B"
-            autoCapitalize="words"
-            value={nome}
-            onChangeText={setNome}
-          />
+            {/* Senha */}
+            <Text style={[styles.label, { marginTop: 20 }]}>SENHA *</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Sua senha"
+              placeholderTextColor="#75838B"
+              secureTextEntry
+              value={senha}
+              onChangeText={(t) => { setSenha(t); setErro(''); }}
+            />
 
-          {/* Erro */}
-          {erro !== '' && <Text style={styles.erro}>{erro}</Text>}
+            {/* Erro */}
+            {erro !== '' && <Text style={styles.erro}>{erro}</Text>}
 
-          {/* Botão */}
-          <TouchableOpacity
-            style={[styles.button, loading && styles.buttonDisabled]}
-            activeOpacity={0.8}
-            onPress={handleEntrar}
-            disabled={loading}
-          >
-            <Text style={styles.buttonText}>
-              {loading ? 'ENTRANDO...' : 'ENTRAR'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+            {/* Botão Entrar */}
+            <TouchableOpacity
+              style={[styles.button, loading && styles.buttonDisabled]}
+              activeOpacity={0.8}
+              onPress={handleEntrar}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color="#FFF" size="small" />
+              ) : (
+                <Text style={styles.buttonText}>ENTRAR</Text>
+              )}
+            </TouchableOpacity>
+
+            {/* Link para Cadastro */}
+            <TouchableOpacity
+              style={styles.linkWrap}
+              activeOpacity={0.7}
+              onPress={() => router.push('/auth/register')}
+            >
+              <Text style={styles.linkText}>
+                Não tem conta?{' '}
+                <Text style={styles.linkAccent}>Cadastre-se</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
 
       {/* Rodapé */}
       <Text style={styles.footer}>PEÇA SEM FILA</Text>
@@ -120,7 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
   },
   scrollContent: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     paddingHorizontal: 24,
     paddingBottom: 60,
@@ -139,6 +167,12 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     letterSpacing: 1,
     textTransform: 'uppercase',
+  },
+  headingSub: {
+    color: '#75838B',
+    fontSize: 13,
+    marginTop: 6,
+    letterSpacing: 0.5,
   },
   card: {
     backgroundColor: '#111416',
@@ -185,6 +219,18 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     letterSpacing: 2,
     textTransform: 'uppercase',
+  },
+  linkWrap: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  linkText: {
+    color: '#75838B',
+    fontSize: 13,
+  },
+  linkAccent: {
+    color: '#ED145B',
+    fontWeight: '600',
   },
   footer: {
     color: '#75838B',

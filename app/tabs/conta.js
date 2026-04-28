@@ -11,12 +11,12 @@ import { theme } from '../../styles/theme';
 
 export default function ContaScreen() {
   const router = useRouter();
-  const { user, setUser } = useUser();
+  const { user, logout } = useUser();
   const { setCart } = useCart();
   const { clearOrders } = useOrder();
 
-  function handleSair() {
-    setUser(null);
+  async function handleSair() {
+    await logout();
     setCart({});
     clearOrders();
     router.replace('/auth/login');
@@ -29,7 +29,7 @@ export default function ContaScreen() {
           <View style={styles.accountCard}>
             <Text style={styles.accountTitle}>Minha Conta</Text>
             <Text style={styles.accountText}>Nome: {user?.nome ?? '—'}</Text>
-            <Text style={styles.accountText}>RM: {user?.rm ?? '—'}</Text>
+            <Text style={styles.accountText}>E-mail: {user?.email ?? '—'}</Text>
           </View>
 
           <View style={styles.actions}>
