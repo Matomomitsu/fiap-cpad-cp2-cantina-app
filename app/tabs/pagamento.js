@@ -13,7 +13,6 @@ import {
   ensureAndroidChannel,
   ensureNotificationPermissions,
   schedulePreparingNotification,
-  scheduleReadyNotification,
 } from '../../services/notificationService';
 import { theme } from '../../styles/theme';
 import { formatPrice } from '../../utils/formatPrice';
@@ -73,6 +72,10 @@ export default function PagamentoScreen() {
     .toUpperCase();
 
   async function handleConfirmar() {
+    if (processando) {
+      return;
+    }
+
     if (!formaSelecionada) {
       setErro('Selecione uma forma de pagamento para continuar.');
       return;
@@ -100,17 +103,13 @@ export default function PagamentoScreen() {
           novoPedido.senha,
           new Date(t0 + ORDER_PREPARING_NOTIFICATION_OFFSET_MS)
         );
-        await scheduleReadyNotification(
-          novoPedido.senha,
-          new Date(t0 + ORDER_PREP_DURATION_MS)
-        );
       }
     } catch (e) {
       console.warn('Falha ao agendar notificações:', e);
     }
 
     setTimeout(() => {
-      router.push('/tabs/pedido-final');
+      router.replace('/tabs/pedido-final');
       setCart({});
       setProcessando(false);
     }, 1500);

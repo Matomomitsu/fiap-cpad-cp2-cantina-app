@@ -67,7 +67,7 @@ export default function PedidoFinalScreen() {
       // detecta que o pedido ficou pronto — sem depender do agendador do SO,
       // que pode sofrer drift de vários segundos no Android.
       if (activeOrder?.senha) {
-        sendReadyNotificationNow(activeOrder.senha).catch(() => {});
+        sendReadyNotificationNow(activeOrder.senha, activeOrder.id).catch(() => {});
       }
     }, remaining);
     return () => clearTimeout(t);
