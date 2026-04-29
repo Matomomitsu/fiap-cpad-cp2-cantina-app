@@ -80,17 +80,13 @@ Depois de iniciar, escaneie o QR Code com o **Expo Go** ou pressione `a` para ab
 |:-----:|:--------:|:--------:|
 | ![Login](assets/images/telas/cp02/login.png) | ![Cadastro](assets/images/telas/cp02/cadastro.png) | ![Cardápio](assets/images/telas/cardapio.png) |
 
-| Carrinho | Pagamento | Conta |
+| Carrinho | Histórico | Conta |
 |:--------:|:---------:|:-----:|
-| ![Carrinho](assets/images/telas/cp02/carrinho.png) | ![Pagamento](assets/images/telas/cp02/pagamento.png) | ![Conta](assets/images/telas/cp02/conta.png) |
+| ![Carrinho](assets/images/telas/cp02/carrinho.png) | ![Historico](assets/images/telas/cp02/historico-pedidos.png) | ![Conta](assets/images/telas/cp02/conta.png) |
 
-| Pedido em preparo | Pedido pronto | Histórico |
+| Pedido em preparo | Pedido pronto | Detalhe do Histórico |
 |:-----------------:|:-------------:|:---------:|
-| ![Pedido em preparo](assets/images/telas/cp02/pedido-preparando.png) | ![Pedido pronto](assets/images/telas/cp02/pedido-pronto.png) | ![Histórico](assets/images/telas/cp02/historico-pedidos.png) |
-
-| Detalhe do histórico |
-|:--------------------:|
-| ![Detalhe do histórico](assets/images/telas/cp02/detalhes-historico-pedido.png) |
+| ![Pedido em preparo](assets/images/telas/cp02/pedido-preparando.png) | ![Pedido pronto](assets/images/telas/cp02/pedido-pronto.png) | ![Detalhe do Histórico](assets/images/telas/cp02/detalhes-historico-pedido.png) |
 
 ### Vídeo demonstrativo
 
