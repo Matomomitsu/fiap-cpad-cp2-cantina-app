@@ -8,6 +8,21 @@ A operação escolhida foi a **cantina da FIAP**. Nos horários de intervalo, a 
 
 No CP1, o projeto era um MVP com login simples, cardápio, carrinho, pagamento simulado e tela final de retirada. No CP2, o app foi evoluído para um fluxo mais próximo de produto real, com autenticação persistida, cadastro, sessão, histórico de pedidos, status de preparo, notificações locais e melhoria geral de UX.
 
+## Tecnologias Usadas
+
+Este projeto foi desenvolvido utilizando as seguintes tecnologias:
+
+- React Native
+- Expo SDK 54
+- Expo Router
+- JavaScript
+- AsyncStorage
+- Context API
+- Expo Notifications
+- Expo Print
+- React Hooks (useState, useEffect, useContext)
+- StyleSheet
+
 ## O que mudou em relação ao CP1
 
 Comparando o estado atual com o commit final do CP1 (`7a5b6d3`), as principais evoluções foram:
