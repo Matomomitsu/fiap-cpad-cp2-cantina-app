@@ -1,120 +1,160 @@
 # Cantina FIAP
 
-Aplicativo mobile desenvolvido como Checkpoint 1 da disciplina **Cross-Platform Application Development** — Ciência da Computação, 3º semestre (FIAP).
+Aplicativo mobile desenvolvido para o **Checkpoint 2** da disciplina **Cross-Platform Application Development** — Ciência da Computação, 3º semestre (FIAP).
 
 ## Sobre o Projeto
 
-A FIAP possui duas cantinas que ficam sobrecarregadas durante o horário de intervalo. O intervalo em si já é curto, e a fila acaba consumindo boa parte desse tempo.
+A operação escolhida foi a **cantina da FIAP**. Nos horários de intervalo, a fila da cantina consome uma parte importante do tempo dos alunos. A proposta do app é permitir que o aluno monte o pedido, simule o pagamento, acompanhe o status e retire a compra usando uma senha, reduzindo espera e deixando o fluxo mais previsível.
 
-A solução proposta é um app que permite aos alunos **escolher e pagar itens da cantina com antecedência**, gerando uma **senha de retirada**. Assim o aluno chega no balcão, informa a senha e retira o pedido — sem fila, sem espera.
+No CP1, o projeto era um MVP com login simples, cardápio, carrinho, pagamento simulado e tela final de retirada. No CP2, o app foi evoluído para um fluxo mais próximo de produto real, com autenticação persistida, cadastro, sessão, histórico de pedidos, status de preparo, notificações locais e melhoria geral de UX.
 
-### Funcionalidades
+## O que mudou em relação ao CP1
 
-- Login com RM (6 dígitos) e nome do aluno
-- Cardápio organizado por categorias (Lanches, Bebidas, Doces) com imagens
-- Carrinho com controle de quantidade por item
-- Tela de pagamento com seleção de forma (PIX, Cartão, Saldo)
-- Tela de pedido final com senha de retirada e resumo completo
-- Tela de conta com dados do usuário e logout
+Comparando o estado atual com o commit final do CP1 (`7a5b6d3`), as principais evoluções foram:
+
+- Autenticação real local com **cadastro**, **login**, **logout** e sessão persistida.
+- Substituição do login antigo com RM/nome por e-mail e senha salvos no `AsyncStorage`.
+- Criação das rotas `app/auth/login.js` e `app/auth/register.js`.
+- Reorganização das telas principais dentro de `app/tabs/`.
+- Persistência do histórico funcional de pedidos com `AsyncStorage`.
+- Nova tela de **histórico de pedidos**.
+- Nova tela de **detalhe de pedido finalizado**.
+- Status visual do pedido: em preparo e pronto para retirada.
+- Notificações locais para avisar andamento e retirada do pedido.
+- Geração e compartilhamento de comprovante em PDF.
+- Footer com navegação por ícones usando `@expo/vector-icons`.
+- Uso de `uuid` para identificar pedidos.
+- Melhorias nos feedbacks visuais: loading, estados vazios, erro inline, sucesso e botões desabilitados.
+
+## Funcionalidades
+
+- Cadastro de usuário com nome, e-mail, senha e confirmação de senha.
+- Login validando credenciais persistidas localmente.
+- Sessão persistida para manter o usuário logado ao reabrir o app.
+- Logout com limpeza da sessão, carrinho e pedidos em memória.
+- Cardápio por categorias, com imagens e controle de quantidade.
+- Carrinho integrado ao fluxo de pagamento.
+- Pagamento simulado com seleção de forma de pagamento.
+- Geração de senha de retirada.
+- Tela de pedido em andamento com status de preparo.
+- Notificação local quando o pedido entra em preparo e quando fica pronto.
+- Histórico de pedidos finalizados persistido.
+- Detalhe de pedido histórico com itens, total, status e forma de pagamento.
+- Comprovante em PDF com compartilhamento pelo dispositivo.
+- Navegação com Expo Router.
+- Estado global com Context API.
 
 ## Integrantes
 
-| Nome |
-|------|
-| Helena Barbosa Costa |
-| Henrique Mandrick |
-| Mateus Scandiuzzi Valente Tomomitsu |
-| Ryan Amorim de Castro Santana |
-| Thomas Joh Kobayashi |
+- Helena Barbosa Costa 
+- Henrique Mandrick 
+- Mateus Scandiuzzi Valente Tomomitsu 
+- Ryan Amorim de Castro Santana
+- Thomas Joh Kobayashi 
 
 ## Como Rodar
 
 ### Pré-requisitos
 
-- [Node.js](https://nodejs.org/) v18 ou superior (recomendado v20 LTS)
-- [Git](https://git-scm.com/) instalado
-- [Expo Go](https://expo.dev/go) instalado no celular (Android ou iOS) para testar no dispositivo físico
-- Alternativamente, [Android Studio](https://developer.android.com/studio) com um emulador configurado
+- [Node.js](https://nodejs.org/) v18 ou superior, recomendado v20 LTS.
+- [Git](https://git-scm.com/) instalado.
+- Expo SDK 54, conforme `package.json`.
+- [Expo Go](https://expo.dev/go) no celular ou Android Studio com emulador configurado.
 
 ### Passo a passo
 
 ```bash
-# 1. Clone o repositório
-git clone https://github.com/Matomomitsu/FIAP-CPAD-CP01.git
-
-# 2. Entre na pasta do projeto
-cd FIAP-CPAD-CP01
-
-# 3. Instale as dependências
+git clone https://github.com/Matomomitsu/fiap-cpad-cp2-cantina-app.git
+cd fiap-cpad-cp2-cantina-app
 npm install
-
-# 4. Inicie o servidor de desenvolvimento
 npx expo start
 ```
 
-Após iniciar, escaneie o QR Code exibido no terminal com o app **Expo Go** no celular, ou pressione `a` para abrir no emulador Android.
+Depois de iniciar, escaneie o QR Code com o **Expo Go** ou pressione `a` para abrir no emulador Android.
 
-## Demonstração
+## Demonstração Visual
 
-### Telas do App
 
-| Login | Cardápio | Pagamento |
-|:-----:|:--------:|:---------:|
-| ![Login](assets/images/telas/login.png) | ![Cardápio](assets/images/telas/cardapio.png) | ![Pagamento](assets/images/telas/telaPagamento.png) |
 
-| Pedido Final | Minha Conta |
-|:------------:|:-----------:|
-| ![Pedido Final](assets/images/telas/telaRetirada.png) | ![Conta](assets/images/telas/telaConta.png) |
+| Login | Cadastro | Cardápio |
+|:-----:|:--------:|:--------:|
+| ![Login](assets/images/telas/cp02/login.png) | ![Cadastro](assets/images/telas/cp02/cadastro.png) | ![Cardápio](assets/images/telas/cardapio.png) |
+
+| Carrinho | Pagamento | Conta |
+|:--------:|:---------:|:-----:|
+| ![Carrinho](assets/images/telas/cp02/carrinho.png) | ![Pagamento](assets/images/telas/cp02/pagamento.png) | ![Conta](assets/images/telas/cp02/conta.png) |
+
+| Pedido em preparo | Pedido pronto | Histórico |
+|:-----------------:|:-------------:|:---------:|
+| ![Pedido em preparo](assets/images/telas/cp02/pedido-preparando.png) | ![Pedido pronto](assets/images/telas/cp02/pedido-pronto.png) | ![Histórico](assets/images/telas/cp02/historico-pedidos.png) |
+
+| Detalhe do histórico |
+|:--------------------:|
+| ![Detalhe do histórico](assets/images/telas/cp02/detalhes-historico-pedido.png) |
 
 ### Vídeo demonstrativo
 
-[![Demonstração](https://img.shields.io/badge/YouTube-Assistir_demo-red?logo=youtube)](https://www.youtube.com/shorts/2UPpPNg-EF0)
+[![Demonstração](https://img.shields.io/badge/YouTube-Assistir_demo-red?logo=youtube)](https://www.youtube.com/shorts/1JYCxhhCX9o?feature=share)
 
 ## Decisões Técnicas
 
 ### Estrutura do projeto
 
+```text
+app/                    Rotas do Expo Router
+app/auth/               Telas de login e cadastro
+app/tabs/               Telas autenticadas do fluxo principal
+components/             Componentes reutilizáveis
+contexts/               Estado global com Context API
+services/               Serviços de autenticação e notificações
+styles/                 Tema visual centralizado
+utils/                  Funções utilitárias de preço e pedido
+assets/images/          Imagens do cardápio e prints do README
 ```
-app/              → Telas (file-based routing via Expo Router)
-components/       → Componentes reutilizáveis (FoodCard, PrimaryButton, AppFooter, etc.)
-contexts/         → Estado global com Context API (UserContext, CartContext, OrderContext)
-styles/           → Tokens de tema centralizados (cores, espaçamentos, bordas)
-utils/            → Funções auxiliares (formatPrice)
-assets/images/    → Imagens dos itens do cardápio e screenshots
-```
 
-O projeto foi dividido em **7 componentes reutilizáveis**, **3 contextos** e **5 telas funcionais**. Cada arquivo tem uma responsabilidade clara — telas cuidam do fluxo, componentes cuidam da apresentação, e contextos compartilham estado entre as telas.
+### Context API
 
-### Hooks utilizados
+- `UserContext`: armazena o usuário logado, o estado de carregamento da sessão, `setUser` e `logout`.
+- `CartContext`: armazena os itens selecionados no carrinho.
+- `OrderContext`: armazena o pedido ativo, o histórico de pedidos e funções para iniciar ou limpar pedidos.
 
-- **`useState`** — controle de estado local em todas as telas: campos de formulário no login, categoria selecionada no cardápio, forma de pagamento e estado de processamento no pagamento.
-- **`useContext`** — consumo dos providers globais (`useUser`, `useCart`, `useOrder`) para que dados como usuário logado, itens do carrinho e dados do pedido confirmado estejam acessíveis em qualquer tela sem precisar passar props manualmente entre elas.
+### AsyncStorage
 
-### Navegação
+O app usa `AsyncStorage` para persistir dados locais sem backend:
 
-A navegação usa **Expo Router** com roteamento baseado em arquivos. O layout raiz (`_layout.js`) configura um `Stack` com animação `slide_from_right` e envolve toda a árvore com os providers de contexto. A navegação programática é feita com `router.push()`, `router.back()` e `router.replace()`.
+- `@cantina-fiap/users`: lista de usuários cadastrados.
+- `@cantina-fiap/session`: sessão do usuário logado.
+- `@cantina-fiap/order-history`: histórico de pedidos finalizados.
 
-### Cardápio e uso do componente Image
+A sessão é restaurada no `UserContext` usando `useEffect`. O histórico é carregado ao montar o `OrderContext` e salvo novamente sempre que a lista muda.
 
-O cardápio exibe os itens em cards (`FoodCard`) com imagem, nome, descrição e preço. As imagens são carregadas localmente via `require()` e renderizadas com o componente `Image` do React Native. Um filtro por categoria (Lanches, Bebidas, Doces) permite alternar entre os itens usando um componente de botões segmentados. O controle de quantidade (+/-) atualiza o carrinho em tempo real via `CartContext`.
+### Autenticação
 
-### Pagamento e pedido final
+O cadastro normaliza o e-mail, valida duplicidade e salva o usuário no `AsyncStorage`. O login consulta os usuários persistidos e só permite entrada quando e-mail e senha conferem. Ao autenticar, a sessão é salva e o usuário é redirecionado para o cardápio.
 
-A tela de pagamento lista os itens do carrinho com subtotais, exibe o total e oferece seleção de forma de pagamento (PIX, Cartão, Saldo) com feedback visual de radio buttons. Ao confirmar, os dados do pedido são salvos no `OrderContext` e o carrinho é limpo. A tela de pedido final lê esses dados e exibe a senha de retirada, o resumo dos itens, o total pago e a forma de pagamento escolhida.
+### Navegação protegida
 
-### Login e logo SVG
+A rota inicial `app/index.js` funciona como porteiro do app: enquanto a sessão é carregada, mostra `ActivityIndicator`; se existe usuário logado, redireciona para `/tabs/cardapio`; se não existe sessão, redireciona para `/auth/login`. O logout limpa a sessão e retorna para o login com `router.replace`.
 
-A tela de login inclui validação de RM (exatamente 6 dígitos) e nome obrigatório, com feedback de erro e estado de loading. O logo da FIAP foi reproduzido usando `react-native-svg` — a única biblioteca adicional ao template — para replicar o logo vetorial visto no portal [on.fiap.com.br](https://on.fiap.com.br/), que utiliza SVG.
+### Validação de formulários
 
-### Estilização
+Os formulários usam `useState`, funções de validação e feedback inline. No login, os erros aparecem abaixo do campo correspondente, em vermelho, e o botão de submissão fica desabilitado enquanto e-mail ou senha estão inválidos.
 
-Todos os estilos usam `StyleSheet.create()`. As cores, espaçamentos e border radius vêm de um arquivo de tema centralizado (`styles/theme.js`), garantindo consistência visual em todas as telas. O app segue um tema escuro com a cor primária da FIAP (`#ED145B`).
+### Pedido, histórico e comprovante
 
-## Próximos Passos
+Ao confirmar o pagamento, o app cria um registro de pedido com senha de retirada, total, forma de pagamento, itens e status. Quando um novo pedido é iniciado, o pedido anterior é finalizado e entra no histórico persistido. A tela final também permite gerar um comprovante em PDF usando `expo-print` e compartilhar o arquivo com `expo-sharing`.
 
-Com mais tempo, implementaríamos:
+## Diferencial Implementado
 
-- **Histórico de pedidos** — permitir que o aluno consulte pedidos anteriores com data, itens e valor
-- **Status do pedido em tempo real** — indicar se o pedido está sendo preparado, pronto para retirada ou já retirado
-- **Integração com backend** — persistir dados e autenticar via API
-- **Notificações push** — avisar o aluno quando o pedido estiver pronto
+O diferencial principal escolhido foi **notificações locais com Expo Notifications**.
+
+### Justificativa
+
+Esse diferencial combina diretamente com o problema da cantina: o aluno não precisa ficar olhando a tela para saber se o pedido está pronto. A notificação transforma o fluxo em algo mais útil no uso real, porque o aluno pode aguardar em outro lugar e voltar ao balcão quando receber o aviso.
+
+### Como foi implementado
+
+O serviço `services/notificationService.js` centraliza permissões, canal Android e agendamento. Na confirmação do pagamento, a tela agenda notificações para o pedido em preparo e para o pedido pronto. A tela de pedido final também dispara a notificação de pronto quando detecta a transição de status.
+
+Além disso, a tela de pedido final usa `Animated API` para reforçar visualmente o status do pedido, com pulso durante preparo e animação quando fica pronto.
+

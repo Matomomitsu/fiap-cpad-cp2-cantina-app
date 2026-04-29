@@ -16,34 +16,75 @@ import { LogoFiap } from '../../components/LogoFiap';
 import { useUser } from '../../contexts/UserContext';
 import { loginUser } from '../../services/authService';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function LoginScreen() {
   const router = useRouter();
   const { setUser } = useUser();
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [erro, setErro] = useState('');
+  const [erros, setErros] = useState({});
+  const [camposTocados, setCamposTocados] = useState({});
   const [loading, setLoading] = useState(false);
 
-  async function handleEntrar() {
-    // Validações locais
-    if (!email.trim()) {
-      setErro('Informe seu e-mail.');
-      return;
+  function validarCampos(emailAtual = email, senhaAtual = senha) {
+    const novosErros = {};
+
+    if (!emailAtual.trim()) {
+      novosErros.email = 'Informe seu e-mail.';
+    } else if (!EMAIL_REGEX.test(emailAtual.trim())) {
+      novosErros.email = 'E-mail com formato inválido.';
     }
-    if (!senha) {
-      setErro('Informe sua senha.');
+
+    if (!senhaAtual) {
+      novosErros.senha = 'Informe sua senha.';
+    } else if (senhaAtual.length < 6) {
+      novosErros.senha = 'A senha deve ter no mínimo 6 caracteres.';
+    }
+
+    return novosErros;
+  }
+
+  const errosAtuais = validarCampos();
+  const formularioValido = Object.keys(errosAtuais).length === 0;
+  const botaoDesabilitado = loading || !formularioValido;
+
+  function atualizarEmail(texto) {
+    setEmail(texto);
+    setCamposTocados((atuais) => ({ ...atuais, email: true }));
+    setErros(validarCampos(texto, senha));
+  }
+
+  function atualizarSenha(texto) {
+    setSenha(texto);
+    setCamposTocados((atuais) => ({ ...atuais, senha: true }));
+    setErros(validarCampos(email, texto));
+  }
+
+  function marcarCampoTocado(campo) {
+    setCamposTocados((atuais) => ({ ...atuais, [campo]: true }));
+    setErros(validarCampos());
+  }
+
+  async function handleEntrar() {
+    const errosValidacao = validarCampos();
+    setCamposTocados({ email: true, senha: true });
+    setErros(errosValidacao);
+
+    if (Object.keys(errosValidacao).length > 0) {
       return;
     }
 
-    setErro('');
+    setErros({});
     setLoading(true);
 
     try {
       const result = await loginUser({ email, senha });
 
       if (!result.success) {
-        setErro(result.error);
+        setErros({ senha: result.error });
+        setCamposTocados({ email: true, senha: true });
         setLoading(false);
         return;
       }
@@ -51,7 +92,8 @@ export default function LoginScreen() {
       setUser(result.user);
       router.replace('/tabs/cardapio');
     } catch {
-      setErro('Ocorreu um erro. Tente novamente.');
+      setErros({ senha: 'Ocorreu um erro. Tente novamente.' });
+      setCamposTocados({ email: true, senha: true });
     } finally {
       setLoading(false);
     }
@@ -83,36 +125,41 @@ export default function LoginScreen() {
             {/* Email */}
             <Text style={styles.label}>E-MAIL *</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, camposTocados.email && erros.email && styles.inputErro]}
               placeholder="seu@email.com"
               placeholderTextColor="#75838B"
               keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
               value={email}
-              onChangeText={(t) => { setEmail(t); setErro(''); }}
+              onChangeText={atualizarEmail}
+              onBlur={() => marcarCampoTocado('email')}
             />
+            {camposTocados.email && erros.email && (
+              <Text style={styles.erro}>{erros.email}</Text>
+            )}
 
             {/* Senha */}
             <Text style={[styles.label, { marginTop: 20 }]}>SENHA *</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, camposTocados.senha && erros.senha && styles.inputErro]}
               placeholder="Sua senha"
               placeholderTextColor="#75838B"
               secureTextEntry
               value={senha}
-              onChangeText={(t) => { setSenha(t); setErro(''); }}
+              onChangeText={atualizarSenha}
+              onBlur={() => marcarCampoTocado('senha')}
             />
-
-            {/* Erro */}
-            {erro !== '' && <Text style={styles.erro}>{erro}</Text>}
+            {camposTocados.senha && erros.senha && (
+              <Text style={styles.erro}>{erros.senha}</Text>
+            )}
 
             {/* Botão Entrar */}
             <TouchableOpacity
-              style={[styles.button, loading && styles.buttonDisabled]}
+              style={[styles.button, botaoDesabilitado && styles.buttonDisabled]}
               activeOpacity={0.8}
               onPress={handleEntrar}
-              disabled={loading}
+              disabled={botaoDesabilitado}
             >
               {loading ? (
                 <ActivityIndicator color="#FFF" size="small" />
@@ -196,6 +243,9 @@ const styles = StyleSheet.create({
     color: '#ACC1CC',
     fontSize: 15,
     paddingHorizontal: 12,
+  },
+  inputErro: {
+    borderColor: '#ED145B',
   },
   erro: {
     color: '#ED145B',
